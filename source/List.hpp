@@ -61,48 +61,34 @@ template <typename T> class ListIterator
         return old; //gib mir die alte Position zurück
     } 
 
-     ListNode <T>* get_node () //get Methode um an den Wert eines neuen Iterators zu kommen
+     ListNode <T>* get_node () const //get Methode um an den Wert eines neuen Iterators zu kommen
     {
         return node;
     }
 
     bool operator==(Self const& x) const //vergleicht die Positionen zwei Iteratoren miteinander
     {
-        if (node == x.get_node() )
-        {
-            return true;
-        }
+        return node == x.get_node();
+        
     } 
 
 
     bool operator!=(Self const& x) const //schaut ob zwei Iteratoren ungleich sind
     {
-        if (node != x.get_node() )
-        {
-            return true;
-        }
+        return node != x.get_node();
+        
     }
 
 
     Self next () const //Gibt einen Iterator zurück, der auf das nächste Element zeigt
     {
         if (node)
+        {
             return ListIterator(node->next);
+        }
         else
             return ListIterator (nullptr);
     }   
-
-
-    Self begin () const 
-    {
-
-
-    }
-
-    Self end () const 
-    {
-
-    }
 
 
     private:
@@ -260,6 +246,17 @@ template <typename T> class List
             pop_back();
         }             
     }
+
+
+    iterator begin () const //gibt einen ListIterator auf den ersten Knoten zurück
+    {
+        return iterator(first_);   
+    }
+
+    iterator end () const //gibt einen ListIterator auf das Ende (nullptr, Standardkonstruktor) zurück
+    {
+        return iterator();
+    } 
 
     private:
     std::size_t size_;
