@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-template <typename T> class List;
+template <typename T> class List; //man kann es erstmal nutzen, obwohl noch keine Funtkionen da sind etc. 
 
 template <typename T> struct ListNode 
 {
@@ -15,15 +15,101 @@ template <typename T> struct ListNode
     ListNode* next = nullptr;
 };
 
+// Aufgabe 4.5 
+
 template <typename T> class ListIterator
 {
     public:
-    // not implemented yet
-    // do not forget about the initialiser lists !
+    using Self = ListIterator <T>;
+    using value_type = T; 
+    using pointer = T*; 
+    using reference = T&; 
+    using difference_type = ptrdiff_t;
+    using iterator_category = std::bidirectional_iterator_tag;
     
+    ListIterator(): //Standardkonstruktor
+    node {nullptr}
+    {}
+
+    ListIterator(ListNode<T>* n): 
+    node {n} 
+    {}
+    
+
+    reference operator* () const 
+    {
+        return node->value; //Gibt den Wert des node zurück
+    } 
+    
+    pointer operator->() const 
+    {
+        return &(node->value); //Die Referenz gibt die Adresse des Wertes zurück
+    } 
+    
+
+    Self& operator++() //Iterator weitersetzen (++x)
+    {        
+        node = node->next; 
+        return *this;  //so wird der Iterator zurückgegeben 
+    } 
+
+
+    Self operator++(int) //Der Iterator wird eins weitergesetzt, es wird aber die vorherige Position ausgegeben (x++)
+    {
+        Self old = *this; //unser neuer Iterator ist auf dem alten Iterator
+        ++(*this); //erhöhe die Position des Iterators um 1 
+        return old; //gib mir die alte Position zurück
+    } 
+
+     ListNode <T>* get_node () //get Methode um an den Wert eines neuen Iterators zu kommen
+    {
+        return node;
+    }
+
+    bool operator==(Self const& x) const //vergleicht die Positionen zwei Iteratoren miteinander
+    {
+        if (node == x.get_node() )
+        {
+            return true;
+        }
+    } 
+
+
+    bool operator!=(Self const& x) const //schaut ob zwei Iteratoren ungleich sind
+    {
+        if (node != x.get_node() )
+        {
+            return true;
+        }
+    }
+
+
+    Self next () const //Gibt einen Iterator zurück, der auf das nächste Element zeigt
+    {
+        if (node)
+            return ListIterator(node->next);
+        else
+            return ListIterator (nullptr);
+    }   
+
+
+    Self begin () const 
+    {
+
+
+    }
+
+    Self end () const 
+    {
+
+    }
+
+
     private:
     ListNode <T>* node;
 };
+
+
 
 template <typename T> class ListConstIterator
 {
@@ -35,12 +121,15 @@ template <typename T> class ListConstIterator
     ListNode <T>* node;
 };
 
+
+
+
 template <typename T> class List
 {
     public:
     using value_type = T;
     using pointer = T*; 
-    using const_ponter = T const*;
+    using const_pointer = T const*;
     using reference = T&;
     using const_reference = T const&;
     using iterator = ListIterator<T>;
@@ -48,7 +137,19 @@ template <typename T> class List
 
 // Aufgabe 4.2
 
-    List(): size_{0}, first_{nullptr}, last_{nullptr} {} //Default Constructor
+    //Default Constructor
+    List(): 
+    size_{0}, 
+    first_{nullptr}, 
+    last_{nullptr} 
+    {} 
+
+    //Destruktor
+    ~List() 
+    {
+        clear();
+    }
+    
     bool empty() const {return size_ == 0;}
     std::size_t size() const{return size_;}
 
@@ -125,7 +226,7 @@ template <typename T> class List
     {
         if (true == empty() )
         {
-            std::cout << "Die Liste enthält keine Elemente!" << "\n";
+            std::cout << "The list is already empty!" << "\n";
         }
 
         else if (1 == size_)
@@ -146,9 +247,19 @@ template <typename T> class List
         }
     }
 
+    // Aufgabe 4.4 
 
-
-
+    void clear ()
+    {
+        if (true == empty()) 
+        {
+            std::cout << "There are no elements in the list." << "\n"; 
+        }
+        while (size_ != 0)
+        {
+            pop_back();
+        }             
+    }
 
     private:
     std::size_t size_;

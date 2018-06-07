@@ -50,8 +50,35 @@ TEST_CASE ("delete last element with pop_back", "[modifiers]")
     REQUIRE (50 == list.front());
 }
 
+// Aufgabe 4.4 
 
+TEST_CASE ("should be empty after clearing", "[modifiers]")
+{
+    List<int> list; 
+    list.push_front(1);
+    list.push_front(2);
+    list.push_front(3);
+    list.push_front(4);
+    list.clear();
+    REQUIRE (list.empty());
+}
 
+// Aufgabe 4.6 
+
+TEST_CASE ("should be an empty range after default construction", "[iterators]")
+{
+    List<int> list;
+    auto b = list.begin();
+    auto e = list.end();
+    REQUIRE (b == e);
+}
+
+TEST_CASE ("provide access to the first element with begin", "[iterators")
+{
+    List<int> list;
+    list.push_front(42);
+    REQUIRE(42 == *list.begin());
+}
 
 int main(int argc, char *argv[])
 {
