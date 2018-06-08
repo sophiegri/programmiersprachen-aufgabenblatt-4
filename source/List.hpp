@@ -170,7 +170,7 @@ template <typename T> class List
         } 
         else 
         {
-            last_=nodepointer; //falls die Liste leer war zeigen nun beide Pointer auf Null
+            last_ = nodepointer; //falls die Liste leer war zeigen nun beide Pointer auf Null
         }
 
         first_ = nodepointer; 
@@ -245,7 +245,7 @@ template <typename T> class List
         }
     }
 
-    // Aufgabe 4.4 
+// Aufgabe 4.4 
 
     void clear ()
     {
@@ -270,6 +270,31 @@ template <typename T> class List
     {
         return iterator();
     } 
+
+// Aufgabe 4.9 
+
+    void insert (ListIterator<T> const& position, T const& value)
+    {
+        auto m = position.get_node();
+
+        if (m->prev == nullptr) //Wenn m mein erstes Element ist, dann füge den Wert am Ende ein
+        {
+            push_front(value);
+        }
+        else if (m == nullptr) //das kann zutreffen wenn m auf das Ende der Liste zeigt oder die Liste leer ist
+        {
+            push_back(value);
+        }
+        //um einen Knoten irgendwo einzufügen müssen wir einen neuen ListNode definieren
+        else 
+        {
+            ListNode <T>* new_node = new ListNode<T> {value, m->prev, m}; 
+            //der Wert unseres neuen nodes ist die eingabe value, die prev Position ist m->prev und next ist m weil es ja davor eingefügt werden soll
+            m->prev->next = new_node; // das vorherige prev von m ist jetzt next new_node 
+            m->prev = new_node;
+        }
+        ++size_; //erhöhe die Größe mit jedem insert 
+    }
 
     private:
     std::size_t size_;
