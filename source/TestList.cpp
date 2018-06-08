@@ -64,6 +64,7 @@ TEST_CASE ("should be empty after clearing", "[modifiers]")
 }
 
 // Aufgabe 4.5 
+///////////NOCH TESTS SCHREIBEN!!!!!!!!!!!!!!!!!!!!
 
 
 // Aufgabe 4.6 
@@ -82,6 +83,29 @@ TEST_CASE ("provide access to the first element with begin", "[iterators")
     list.push_front(42);
     REQUIRE(42 == *list.begin());
 } 
+
+// Aufgabe 4.7 
+
+TEST_CASE ("compare two lists with different size" , "[modifiers]")
+{
+    List<int> list1;
+    List<int> list2;
+    list1.push_front(42);    
+    REQUIRE(list1 != list2);
+} 
+
+TEST_CASE ("compare two Lists with same size" , "[modifiers]")
+{
+    List<int> list1;
+    List<int> list2;
+    list1.push_front(42);  
+    list2.push_front(42);   
+    REQUIRE(list1 == list2);
+} 
+
+
+
+
 
 int main(int argc, char *argv[])
 {

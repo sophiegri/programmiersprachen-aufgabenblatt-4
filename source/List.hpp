@@ -130,6 +130,9 @@ template <typename T> class List
     last_{nullptr} 
     {} 
 
+    //Copy Constructor
+   
+
     //Destruktor
     ~List() 
     {
@@ -247,6 +250,7 @@ template <typename T> class List
         }             
     }
 
+// Aufgabe 4.6 
 
     iterator begin () const //gibt einen ListIterator auf den ersten Knoten zurück
     {
@@ -263,6 +267,39 @@ template <typename T> class List
     ListNode <T>* first_; 
     ListNode <T>* last_;
 };
+
+// Aufgabe 4.7 
+
+template <typename T> 
+bool operator == (List<T> const& xs, List<T> const& ys)
+{
+    if (xs.size() != ys.size()) //wenn die Größe nicht gleich ist, sind die Listen nicht gleich 
+    {
+        return false; 
+    }
+    else 
+    {
+        auto x = xs.begin(); 
+        auto y = ys.begin(); 
+
+        while (x != nullptr) //solange bis X auf einen nullptr zeigt, also am Ende der Liste ist  
+        {
+            if (*x != *y) //prüfe ob der Wert vom Knoten x und y gleich ist
+            {
+                return false; //wenn der Wert nicht gleich ist, sind die Listen nicht gleich 
+            }
+        ++x; //gehe einen Knoten weiter und wiederhole die Schleife 
+        ++y;
+        }
+        return true; //Falls das Ende also ein nullptr erreicht ist, und alle Werte gleich waren, sind die Listen gleich
+    }
+}
+
+template <typename T>
+bool operator != (List<T> const& xs, List<T> const& ys)
+{
+    return !(xs==ys); //Gegenteil vom == Operator 
+}
 
 #endif
 
