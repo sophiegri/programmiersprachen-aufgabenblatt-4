@@ -116,6 +116,9 @@ TEST_CASE ("copy constructor", "[constructor]")
     REQUIRE(list == list2);
 }
 
+// Aufgabe 4.10
+///////////NOCH TESTS SCHREIBEN!!!!!!!!!!!!!!!!!!!!
+
 
 
 

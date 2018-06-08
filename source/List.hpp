@@ -295,6 +295,23 @@ template <typename T> class List
         }
         ++size_; //erhöhe die Größe mit jedem insert 
     }
+// Aufgabe 4.10 
+
+    void reverse()
+    {
+        List<T> help_list; //neue Liste anlegen
+
+        for (auto p = begin(); p != nullptr; ++p) //es werden die Elemente aus der Liste in die neue Liste eingefügt
+        {
+            help_list.push_back(*p);
+        }
+        clear(); //die Liste wird geleert
+
+        for (auto p = help_list.begin(); p != nullptr; ++p) //die Elemente die in der neuen Liste gespeichert wurden werden in die Liste umgekehrt (push_back) eingefügt
+        {
+            push_front(*p);
+        }
+    }
 
     private:
     std::size_t size_;
@@ -334,6 +351,19 @@ bool operator != (List<T> const& xs, List<T> const& ys)
 {
     return !(xs==ys); //Gegenteil vom == Operator 
 }
+
+template <typename T>
+List<T> reverse(List<T> const& list)
+{
+    List<T> reversed_list; 
+
+    for (auto p = list.begin(); p != nullptr; ++p)
+    {
+        reversed_list.push_front(*p);
+    }
+    return reversed_list; 
+}
+
 
 #endif
 
