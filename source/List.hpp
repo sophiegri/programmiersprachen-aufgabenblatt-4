@@ -131,7 +131,16 @@ template <typename T> class List
     {} 
 
     //Copy Constructor
-   
+    List(List<T> const& list):
+    size_{0},
+    first_{nullptr},
+    last_{nullptr}
+    {
+        for (auto c = list.begin(); c != nullptr; ++c) 
+        {
+            push_back(*c);
+        }
+    }
 
     //Destruktor
     ~List() 
