@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch.hpp>
 #include "List.hpp"
+#include <vector> 
 
 //Aufgabe 4.2
 
@@ -115,7 +116,7 @@ TEST_CASE ("copy constructor", "[constructor]")
 
 // Aufgabe 4.10
 
-/* TEST_CASE ("reversed lists 1", "[reverse]")
+TEST_CASE ("reversed lists 1", "[reverse]")
 {
     List<int> list1; 
     list1.push_front(1);
@@ -142,23 +143,23 @@ TEST_CASE ("reversed lists 2", "[reverse]")
     reverse(list2);
     REQUIRE(98 == reverse(list1).front());
     REQUIRE(list2.begin() == nullptr);
-} */
+}
 
 // Aufgabe 4.11
 
-/* TEST_CASE ("copy list in vector", "[copy list]")
+TEST_CASE ("copy list in vector", "[copy list]")
 {
-    List<int> list; 
-    std::vector<int> v1; 
+    List<int> list;     
     list.push_front(2); 
+    std::vector<int> v1(list.size()); 
     std::copy (list.begin(), list.end(), v1.begin());
     REQUIRE(2 == *v1.begin());
-} */
+}
 
 
 // Aufgabe 4.13 
 
-/* TEST_CASE ("move constructor", "[constructor]")
+TEST_CASE ("move-constructor", "[constructor]")
 {
     List<int> list; 
     list.push_front(1);
@@ -169,7 +170,7 @@ TEST_CASE ("reversed lists 2", "[reverse]")
     REQUIRE(0 == list.size());
     REQUIRE(list.empty());
     REQUIRE(4 == list2.size());
-} */
+}
 
 
 

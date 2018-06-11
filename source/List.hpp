@@ -4,7 +4,6 @@
 #include <cstddef>
 #include <list>
 #include <iostream> // std::cout 
-#include <vector> // std::vector <>
 #include <iterator> // std::ostream_iterator <>
 #include <utility> 
 
@@ -18,7 +17,7 @@ template <typename T> struct ListNode
     ListNode* next = nullptr;
 };
 
-// Aufgabe 4.5 
+//Aufgabe 4.5 
 
 template <typename T> class ListIterator
 {
@@ -71,15 +70,13 @@ template <typename T> class ListIterator
 
     bool operator==(Self const& x) const //vergleicht die Positionen zwei Iteratoren miteinander
     {
-        return node == x.get_node();
-        
+        return node == x.get_node();        
     } 
 
 
     bool operator!=(Self const& x) const //schaut ob zwei Iteratoren ungleich sind
     {
-        return node != x.get_node();
-        
+        return node != x.get_node();        
     }
 
 
@@ -124,17 +121,18 @@ template <typename T> class List
     using iterator = ListIterator<T>;
     using const_iterator = ListConstIterator<T>;
 
-// Aufgabe 4.2
+//Aufgabe 4.2
+//Default Constructor
 
-    //Default Constructor
     List(): 
     size_{0}, 
     first_{nullptr}, 
     last_{nullptr} 
     {} 
 
-    //Aufgabe 4.8 
-    //Copy Constructor
+//Aufgabe 4.8 
+//Copy Constructor
+
     List(List<T> const& list):
     size_{0},
     first_{nullptr},
@@ -146,27 +144,33 @@ template <typename T> class List
         }
     }
 
-    //Aufgabe 4.13 
-    //Move Constructor
-    List(List<T>&& list): //Warum hier &&? 
+//Aufgabe 4.13 
+//Move Constructor
+
+    List(List<T>&& list): // && ist das Zeichen für den move-Konstruktor
     size_(list.size_),
     first_(list.first_),
     last_(list.last_)
     {
-     list.clear();
+     list.size_= 0;
+     list.first_= nullptr;
+     list.last_= nullptr; 
     }
 
-    //Aufgabe 4.4
-    //Destruktor
+//Aufgabe 4.4
+//Destruktor
+
     ~List() 
     {
         clear();
     }
+
+//Aufgabe 4.2
     
     bool empty() const {return size_ == 0;}
-    std::size_t size() const{return size_;}
+    std::size_t size() const {return size_;}
 
-// Aufgabe 4.3 
+//Aufgabe 4.3 
     
     T& front() const {return first_->value;}
     T& last() const {return last_->value;}
@@ -260,7 +264,7 @@ template <typename T> class List
         }
     }
 
-// Aufgabe 4.4 
+//Aufgabe 4.4 
 
     void clear ()
     {
@@ -274,7 +278,7 @@ template <typename T> class List
         }             
     }
 
-// Aufgabe 4.6 
+//Aufgabe 4.6 
 
     iterator begin () const //gibt einen ListIterator auf den ersten Knoten zurück
     {
@@ -310,9 +314,9 @@ template <typename T> class List
         }
         ++size_; //erhöhe die Größe mit jedem insert 
     }
-// Aufgabe 4.10 
+//Aufgabe 4.10 
 
-/*     void reverse()
+    void reverse()
     {
         List<T> help_list; //neue Liste anlegen
 
@@ -326,7 +330,7 @@ template <typename T> class List
         {
             push_front(*p); 
         }
-    } */
+    }
 
 
 
@@ -369,7 +373,9 @@ bool operator != (List<T> const& xs, List<T> const& ys)
     return !(xs==ys); //Gegenteil vom == Operator 
 }
 
-/* template <typename T>
+// Aufgabe 4.10
+
+template <typename T>
 List<T> reverse(List<T> const& list)
 {
     List<T> reversed_list; 
@@ -379,7 +385,7 @@ List<T> reverse(List<T> const& list)
         reversed_list.push_front(*p);
     }
     return reversed_list; 
-} */
+}
 
 
 
