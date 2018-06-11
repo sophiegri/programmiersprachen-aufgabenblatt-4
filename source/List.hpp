@@ -49,7 +49,7 @@ template <typename T> class ListIterator
     } 
     
 
-    Self& operator++() //Iterator weitersetzen (++x)
+    Self& operator++() //Iterator weitersetzen (++x) Pre-inkrement
     {        
         node = node->next; 
         return *this;  //so wird der Iterator zurückgegeben 
@@ -57,7 +57,8 @@ template <typename T> class ListIterator
 
 
     Self operator++(int) //Der Iterator wird eins weitergesetzt, es wird aber die vorherige Position ausgegeben (x++)
-    {
+    {                    //es wird erst der Wert zurückgegeben und dann erhöht (post inkrement)
+                         //es wird kein lokales Objekt zurückgegeben, deswegen ohne Referenz 
         Self old = *this; //unser neuer Iterator ist auf dem alten Iterator
         ++(*this); //erhöhe die Position des Iterators um 1 
         return old; //gib mir die alte Position zurück
@@ -175,7 +176,7 @@ template <typename T> class List
     T& front() const {return first_->value;}
     T& last() const {return last_->value;}
 
-    void push_front(T const& value) //new_value ist eine Referenz auf ein kostantes T-Objekt
+    void push_front(T const& value) //value ist eine Referenz auf ein kostantes T-Objekt
     //das Methoden-const verspricht, dass der Zustand des Objekts auf dem die Methode aufgerufen wird nicht verändert wird
     { 
         ListNode <T>* nodepointer = new ListNode<T> {value, nullptr, nullptr} ; //immer gleich initialisieren 
@@ -226,7 +227,7 @@ template <typename T> class List
             delete first_; 
             first_ = nullptr; 
             last_ = first_; 
-            --size_;
+            --size_; // oder direkt auf O setzen 
         }
 
         else 
@@ -251,7 +252,6 @@ template <typename T> class List
             delete last_; 
             last_ = nullptr; 
             first_ = last_; 
-            --size_;
         }
 
         else 
@@ -259,9 +259,9 @@ template <typename T> class List
             auto temp_last = last_->prev;
             delete last_; 
             last_ = temp_last;    
-            last_->next = nullptr; 
-            --size_; 
+            last_->next = nullptr;  
         }
+        --size_;
     }
 
 //Aufgabe 4.4 
@@ -352,7 +352,7 @@ bool operator == (List<T> const& xs, List<T> const& ys)
     else 
     {
         auto x = xs.begin(); 
-        auto y = ys.begin(); 
+        auto y = ys.begin();  
 
         while (x != nullptr) //solange bis X auf einen nullptr zeigt, also am Ende der Liste ist  
         {
