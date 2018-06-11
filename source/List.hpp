@@ -3,7 +3,10 @@
 
 #include <cstddef>
 #include <list>
-#include <iostream>
+#include <iostream> // std::cout 
+#include <vector> // std::vector <>
+#include <iterator> // std::ostream_iterator <>
+#include <utility> 
 
 
 template <typename T> class List; //man kann es erstmal nutzen, obwohl noch keine Funtkionen da sind etc. 
@@ -130,6 +133,7 @@ template <typename T> class List
     last_{nullptr} 
     {} 
 
+    //Aufgabe 4.8 
     //Copy Constructor
     List(List<T> const& list):
     size_{0},
@@ -142,6 +146,17 @@ template <typename T> class List
         }
     }
 
+    //Aufgabe 4.13 
+    //Move Constructor
+    List(List<T>&& list): //Warum hier &&? 
+    size_(list.size_),
+    first_(list.first_),
+    last_(list.last_)
+    {
+     list.clear();
+    }
+
+    //Aufgabe 4.4
     //Destruktor
     ~List() 
     {
@@ -277,7 +292,7 @@ template <typename T> class List
     {
         auto m = position.get_node();
 
-        if (m->prev == nullptr) //Wenn m mein erstes Element ist, dann füge den Wert am Ende ein
+        if (m->prev == nullptr) //Wenn m mein erstes Element ist, dann füge den Wert davor ein
         {
             push_front(value);
         }
@@ -297,7 +312,7 @@ template <typename T> class List
     }
 // Aufgabe 4.10 
 
-    void reverse()
+/*     void reverse()
     {
         List<T> help_list; //neue Liste anlegen
 
@@ -307,11 +322,13 @@ template <typename T> class List
         }
         clear(); //die Liste wird geleert
 
-        for (auto p = help_list.begin(); p != nullptr; ++p) //die Elemente die in der neuen Liste gespeichert wurden werden in die Liste umgekehrt (push_back) eingefügt
+        for (auto p = help_list.begin(); p != nullptr; ++p) //die Elemente die in der neuen Liste gespeichert wurden werden in die Liste umgekehrt (push_front) eingefügt
         {
-            push_front(*p);
+            push_front(*p); 
         }
-    }
+    } */
+
+
 
     private:
     std::size_t size_;
@@ -352,7 +369,7 @@ bool operator != (List<T> const& xs, List<T> const& ys)
     return !(xs==ys); //Gegenteil vom == Operator 
 }
 
-template <typename T>
+/* template <typename T>
 List<T> reverse(List<T> const& list)
 {
     List<T> reversed_list; 
@@ -362,7 +379,8 @@ List<T> reverse(List<T> const& list)
         reversed_list.push_front(*p);
     }
     return reversed_list; 
-}
+} */
+
 
 
 #endif
